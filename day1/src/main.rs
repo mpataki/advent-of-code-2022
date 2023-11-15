@@ -8,21 +8,24 @@ fn main() {
         
     let lines = file.split('\n');
 
-    let mut global_largest: u32 = 0;
-    let mut local_counter: u32 = 0;
+    let mut vec = vec![];
+    let mut counter: u32 = 0;
 
     for l in lines {
         if l.is_empty() {
-            if local_counter > global_largest {
-                println!("fount new global largest: {}", local_counter);
-                global_largest = local_counter;
-            }
-
-            local_counter = 0;
+            vec.push(counter);
+            counter = 0;
         } else {
-            local_counter += l.parse::<u32>().unwrap();
+            counter += l.parse::<u32>().unwrap();
         }
     }
 
-    println!("The largest is {}", global_largest);
+    vec.sort();
+    vec.reverse();
+
+    assert!(vec.len() >= 3);
+
+    let total = vec[0] + vec[1] + vec[2];
+
+    println!("The top three values summed are: {}", total);
 }
